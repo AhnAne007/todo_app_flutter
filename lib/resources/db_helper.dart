@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:html';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io' as io;
@@ -18,7 +16,6 @@ class DBHelper {
     return null;
   }
 
-  //Write a function to initialize the table existence
   initDatabase() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = '${documentDirectory.path}ToDo.db';
@@ -26,7 +23,6 @@ class DBHelper {
     return db;
   }
 
-  //Write a function to create a table
   _onCreateDatabase(Database db, int version) async {
     await db.execute("CREATE TABLE mytasktable("
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -35,14 +31,12 @@ class DBHelper {
         " dateAndTime TEXT NOT NULL)");
   }
 
-  //Write a function to insert in table
   Future<Todo> insert(Todo toDo) async {
     var dbClient = await db;
     await dbClient?.insert('mytasktable', toDo.toMap());
     return toDo;
   }
 
-  //Write a function to get all the data from the table
   Future<List<Todo>> getListOfTodos() async {
     var dbClient = await db;
     final List<Map<String, Object?>> rawQueryResult = await dbClient!.rawQuery(

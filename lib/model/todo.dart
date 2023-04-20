@@ -1,4 +1,3 @@
-//Making a model class for a ToDo object
 
 class Todo {
   final int? id;
@@ -6,7 +5,6 @@ class Todo {
   final String? description;
   final String? dateAndTime;
 
-  //Constructor
   Todo(
       {
         this.id, this.title, this.description, this.dateAndTime
@@ -19,7 +17,6 @@ class Todo {
         description = result['description'],
         dateAndTime = result['dateAndTime'];
 
-  //Function to convert into Map;
   Map<String, Object?> toMap() {
     return {
       "id": id,
