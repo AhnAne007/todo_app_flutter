@@ -7,7 +7,11 @@ class Todo {
   final String? dateAndTime;
 
   //Constructor
-  Todo({this.id, this.title, this.description, this.dateAndTime});
+  Todo(
+      {
+        this.id, this.title, this.description, this.dateAndTime
+      }
+  );
 
   Todo.fromMap(Map<String, dynamic> result)
       : id = result['id'],
