@@ -85,13 +85,11 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                       child: TextFormField(
                         controller: descController,
                         keyboardType: TextInputType.multiline,
-                        minLines: 1,
-                        maxLines: 5,
+                        minLines: 5,
+                        maxLines: 6,
                         decoration: const InputDecoration(
                           hintText: "Enter Task Description",
                           labelText: "Task Description",
-                          // contentPadding:
-                          //     EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
