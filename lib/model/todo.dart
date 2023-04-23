@@ -4,10 +4,14 @@ class Todo {
   final String? title;
   final String? description;
   final String? dateAndTime;
+  final int? status;
 
   Todo(
       {
-        this.id, this.title, this.description, this.dateAndTime
+        this.id, this.title,
+        this.description,
+        this.dateAndTime,
+        this.status
       }
   );
 
@@ -15,7 +19,8 @@ class Todo {
       : id = result['id'],
         title = result['title'],
         description = result['description'],
-        dateAndTime = result['dateAndTime'];
+        dateAndTime = result['dateAndTime'],
+        status = result['status'];
 
   Map<String, Object?> toMap() {
     return {
@@ -23,6 +28,7 @@ class Todo {
       "title": title,
       "description": description,
       "dateAndTime": dateAndTime,
+      "status":status,
     };
   }
 }

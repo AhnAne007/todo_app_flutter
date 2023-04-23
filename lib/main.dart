@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'My ToDo App',
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          foregroundColor: Colors.transparent,
+          foregroundColor: Colors.white,
           backgroundColor: Colors.black,
         ),
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

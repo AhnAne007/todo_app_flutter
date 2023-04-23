@@ -28,7 +28,8 @@ class DBHelper {
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
         " title TEXT NOT NULL,"
         " description TEXT NOT NULL,"
-        " dateAndTime TEXT NOT NULL)");
+        " dateAndTime TEXT NOT NULL,"
+        " status INTEGER NOT NULL)");
   }
 
   Future<Todo> insert(Todo toDo) async {
@@ -47,12 +48,13 @@ class DBHelper {
 
   Future<int> delete(int id) async {
     var dbClient = await db;
-    return dbClient!.delete('mytasktable', where: 'id = ?', whereArgs: [id]);
+    return await dbClient!.delete('mytasktable',
+        where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> update(Todo toDo) async {
     var dbClient = await db;
-    return dbClient!.update('mytasktable', toDo.toMap(),
+    return await dbClient!.update('mytasktable', toDo.toMap(),
         where: 'id = ?', whereArgs: [toDo.id]);
   }
 }
