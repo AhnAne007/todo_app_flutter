@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (snapshot.data!.isEmpty) {
+              } else if (snapshot.data!.length == 0) {
                 return Center(
                   child: Text(
                     "No Tasks Found",
@@ -69,10 +69,80 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               } else {
-                return Container();
-                // return ListView(
-                //   shrinkWrap: true,
-                // );
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    int toDoId = snapshot.data![index].id!.toInt();
+                    String toDoTitle = snapshot.data![index].title.toString();
+                    String toDoDescription =
+                        snapshot.data![index].description.toString();
+                    String toDoDateAndTime =
+                        snapshot.data![index].dateAndTime.toString();
+                    int toDoStatus = snapshot.data![index].status!.toInt();
+                    return Container(
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: toDoStatus == 0
+                            ? Colors.yellow.shade300
+                            : Colors.lightGreenAccent,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 1,
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.all(10),
+                            title: Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                toDoTitle,
+                                style: TextStyle(fontSize: 19),
+                              ),
+                            ),
+                            subtitle: Text(
+                              toDoDescription,
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 3),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  toDoDateAndTime,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){},
+                                  child: Icon(
+                                    Icons.edit_note,
+                                    color: Colors.deepPurpleAccent,
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                );
               }
             },
           )),
@@ -81,7 +151,10 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.limeAccent[400],
         tooltip: 'Add Task',
-        child: const Icon(Icons.add,color: Colors.black,),
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AddUpdatePage()));
