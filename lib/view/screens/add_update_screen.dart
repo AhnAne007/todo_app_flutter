@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/resources/db_helper.dart';
+import 'package:to_do_app/view/screens/home_screen.dart';
 
 class AddUpdatePage extends StatefulWidget {
   const AddUpdatePage({Key? key}) : super(key: key);
@@ -121,7 +122,9 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                                 textStyle: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
-                            onPressed: () async {
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => const HomePage()));
                               // String res = await AuthMethods().loginUser(
                               //     email: _emailController.text,
                               //     password: _passwordController.text);
