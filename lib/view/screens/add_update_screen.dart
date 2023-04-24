@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/resources/db_helper.dart';
 import 'package:to_do_app/view/screens/home_screen.dart';
@@ -119,38 +120,26 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 primary: Colors.amberAccent,
-                                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
                                 textStyle: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => const HomePage()));
-                              // String res = await AuthMethods().loginUser(
-                              //     email: _emailController.text,
-                              //     password: _passwordController.text);
-                              // if (res == "Success") {
-                              //   ClearFields();
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) {
-                              //         return HomeScreen();
-                              //       },
-                              //     ),
-                              //   );
-                              // } else {
-                              //   final snackBar = SnackBar(
-                              //     content: const Text('User Not Found!'),
-                              //     action: SnackBarAction(
-                              //       label: 'OK',
-                              //       onPressed: () {
-                              //
-                              //         // Some code to undo the change.
-                              //       },
-                              //     ),
-                              //   );
-                              //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              // }
+                              if (_formKey.currentState!.validate()) {
+                                dbHelper!.insert(Todo(
+                                    title: titleController.text,
+                                    description: descController.text,
+                                    status: 0,
+                                    dateAndTime: DateFormat('yMd')
+                                        .add_jm()
+                                        .format(DateTime.now())
+                                        .toString()));
+                                print('Data Added');
+                                clearFields();
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => const HomePage()));
+                              }
+
                             },
                             child: Text(
                               "Submit".toUpperCase(),
@@ -163,7 +152,8 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 primary: Colors.redAccent,
-                                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
                                 textStyle: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             onPressed: () {
@@ -174,7 +164,6 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
-
                         ],
                       ),
                     ),
