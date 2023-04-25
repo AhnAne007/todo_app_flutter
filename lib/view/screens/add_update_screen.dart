@@ -5,7 +5,16 @@ import 'package:to_do_app/resources/db_helper.dart';
 import 'package:to_do_app/view/screens/home_screen.dart';
 
 class AddUpdatePage extends StatefulWidget {
-  const AddUpdatePage({Key? key}) : super(key: key);
+  AddUpdatePage({
+    Key? key,
+    Todo? todo,
+    bool? isUpdate,
+  })  : todo = todo,
+        isUpdate = isUpdate,
+        super(key: key);
+
+  Todo? todo;
+  bool? isUpdate;
 
   @override
   State<AddUpdatePage> createState() => _AddUpdatePageState();
@@ -15,13 +24,14 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
   DBHelper? dbHelper;
   late Future<List<Todo>> todoList;
   final _formKey = GlobalKey<FormState>();
-  final titleController = TextEditingController();
-  final descController = TextEditingController();
+  // final titleController = TextEditingController();
+  // final descController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     dbHelper = DBHelper();
+
     loadData();
   }
 
@@ -31,13 +41,22 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
 
   @override
   Widget build(BuildContext context) {
+    final titleController = TextEditingController(text: widget.todo?.title);
+    final descController = TextEditingController(text: widget.todo?.description);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add/Update Page",
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            )),
+        title: widget.isUpdate == true
+            ? Text("Update Page",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ))
+            : Text("Add Page",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                )),
         centerTitle: true,
         elevation: 0,
         actions: [
@@ -100,6 +119,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
+                            print(widget.todo?.title);
                             return "Enter Some Text";
                           }
                           return null;
@@ -126,20 +146,44 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                dbHelper!.insert(Todo(
-                                    title: titleController.text,
-                                    description: descController.text,
-                                    status: 0,
-                                    dateAndTime: DateFormat('yMd')
-                                        .add_jm()
-                                        .format(DateTime.now())
-                                        .toString()));
-                                print('Data Added');
-                                clearFields();
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => const HomePage()));
+                                if (widget.isUpdate == true) {
+                                  dbHelper!.update(Todo(
+                                    id: widget.todo!.id,
+                                      title: titleController.text,
+                                      description: descController.text,
+                                      status: 0,
+                                      dateAndTime: DateFormat('yMd')
+                                          .add_jm()
+                                          .format(DateTime.now())
+                                          .toString()));
+                                  print(titleController.text);
+                                  print('Data updated');
+                                  titleController.text = '';
+                                  descController.text = '';
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomePage()));
+                                }
+                                else{
+                                  dbHelper!.insert(Todo(
+                                      title: titleController.text,
+                                      description: descController.text,
+                                      status: 0,
+                                      dateAndTime: DateFormat('yMd')
+                                          .add_jm()
+                                          .format(DateTime.now())
+                                          .toString()));
+                                  print('Data Added');
+                                  clearFields();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const HomePage()));
+                                }
                               }
-
                             },
                             child: Text(
                               "Submit".toUpperCase(),
@@ -179,8 +223,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
 
   void clearFields() {
     setState(() {
-      titleController.text = "";
-      descController.text = "";
+
     });
   }
 }

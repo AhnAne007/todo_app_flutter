@@ -70,14 +70,7 @@ class _HomePageState extends State<HomePage> {
               if (!snapshot.hasData) {
                 print(todoList);
                 return Center(
-                  child: Text(
-                    "No Tasks Found",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.black,
-                    ),
-                  ),
+                  child: CircularProgressIndicator(),
                 );
               } else if (snapshot.data!.length == 0) {
                 return Center(
@@ -215,7 +208,10 @@ class _HomePageState extends State<HomePage> {
                                     width: 100,
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => AddUpdatePage(todo: snapshot.data![index], isUpdate: true,)));
+                                    },
                                     child: Icon(
                                       Icons.edit_note,
                                       color: Colors.deepOrange,
@@ -245,7 +241,7 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddUpdatePage()));
+              MaterialPageRoute(builder: (context) => AddUpdatePage()));
         },
       ),
     );
