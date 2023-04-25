@@ -40,11 +40,25 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 10),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomePage()));
+              },
+              child: Icon(
+                Icons.refresh,
+                size: 30,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 10),
             child: Icon(
               Icons.help_outline_rounded,
               size: 30,
             ),
-          )
+          ),
+
         ],
       ),
       body: Column(
