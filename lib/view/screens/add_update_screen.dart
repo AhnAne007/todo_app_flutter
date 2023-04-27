@@ -24,6 +24,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
   DBHelper? dbHelper;
   late Future<List<Todo>> todoList;
   final _formKey = GlobalKey<FormState>();
+
   // final titleController = TextEditingController();
   // final descController = TextEditingController();
 
@@ -35,14 +36,15 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
     loadData();
   }
 
-  loadData() async {
+  void loadData() async {
     todoList = dbHelper!.getListOfTodos();
   }
 
   @override
   Widget build(BuildContext context) {
     final titleController = TextEditingController(text: widget.todo?.title);
-    final descController = TextEditingController(text: widget.todo?.description);
+    final descController =
+        TextEditingController(text: widget.todo?.description);
 
     return Scaffold(
       appBar: AppBar(
@@ -148,7 +150,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                               if (_formKey.currentState!.validate()) {
                                 if (widget.isUpdate == true) {
                                   dbHelper!.update(Todo(
-                                    id: widget.todo!.id,
+                                      id: widget.todo!.id,
                                       title: titleController.text,
                                       description: descController.text,
                                       status: 0,
@@ -165,8 +167,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               const HomePage()));
-                                }
-                                else{
+                                } else {
                                   dbHelper!.insert(Todo(
                                       title: titleController.text,
                                       description: descController.text,
@@ -176,12 +177,12 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                           .format(DateTime.now())
                                           .toString()));
                                   print('Data Added');
-                                  clearFields();
+
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                          const HomePage()));
+                                              const HomePage()));
                                 }
                               }
                             },
@@ -200,9 +201,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                     horizontal: 20, vertical: 10),
                                 textStyle: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
-                            onPressed: () {
-                              clearFields();
-                            },
+                            onPressed: () {},
                             child: Text(
                               "Clear".toUpperCase(),
                               style: TextStyle(color: Colors.black),
@@ -219,11 +218,5 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
         ),
       ),
     );
-  }
-
-  void clearFields() {
-    setState(() {
-
-    });
   }
 }

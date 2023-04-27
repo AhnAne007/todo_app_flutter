@@ -12,18 +12,18 @@ class DBHelper {
     if (_db != null) {
       return _db;
     }
-    _db = await initDatabase();
+    _db = await _initDatabase();
     return _db;
   }
 
-  initDatabase() async {
+  Future<Database> _initDatabase() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = '${documentDirectory.path}ToDo.db';
-    var db = await openDatabase(path, version: 1, onCreate: _onCreateDatabase);
+    Database db = await openDatabase(path, version: 1, onCreate: _onCreateDatabase);
     return db;
   }
 
-  _onCreateDatabase(Database db, int version) async {
+  void _onCreateDatabase(Database db, int version) async {
     await db.execute("CREATE TABLE mytasktable("
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
         " title TEXT NOT NULL,"
