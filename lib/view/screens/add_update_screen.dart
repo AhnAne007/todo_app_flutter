@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/resources/db_helper.dart';
@@ -141,7 +141,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                primary: Colors.amberAccent,
+                                backgroundColor: Colors.amberAccent,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
                                 textStyle: TextStyle(
@@ -196,7 +196,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                primary: Colors.redAccent,
+                                backgroundColor: Colors.redAccent,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
                                 textStyle: TextStyle(
